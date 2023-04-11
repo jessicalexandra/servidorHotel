@@ -7,11 +7,10 @@ export class API{
     }
     levantarServidor(){
         //levantando el servidor 
-this.app.listen(3000,function () {
-    console.log("servidor encendido")
-})
+this.app.listen(process.env.PORT,()=>console.log(`encendido en ${process.env.PORT}`))
     }
     enrutarPeticiones(){
+        this.app.use(express.json())
         this.app.use('/',rutas)
     }
      
