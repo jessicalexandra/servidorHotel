@@ -62,7 +62,7 @@ export class ControladorReservas{
             let datosReserva=peticion.body
             console.log(idReserva)
             console.log(datosReserva)
-            respuesta.status(200).json({
+            respuesta.status(204).json({
                 "mensaje":"exito eliminando reserva",
             })
         }

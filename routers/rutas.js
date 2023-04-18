@@ -8,13 +8,13 @@ let controladorReserva=new ControladorReservas()
 export let rutas=express.Router()
 //atendiendo o enrutando las eticiones o servicios de mi server
 rutas.get('/buscarhabitaciones',controladorHabitacion.buscandoHabitaciones)
-rutas.get('/buscarhabitacion',controladorHabitacion.buscandoHabitacion)
-rutas.post('/registrarhabitacion/:idhabitacion',controladorHabitacion.registrandoHabitacion)
+rutas.get('/buscarhabitacion/:idhabitacion',controladorHabitacion.buscandoHabitacion)
+rutas.post('/registrarhabitacion',controladorHabitacion.registrandoHabitacion)
 rutas.put('/editandohabitacion/:idhabitacion',controladorHabitacion.editandoHabitacion)
   //----------------------------------------------------
 rutas.get('/buscarreservas',controladorReserva.buscandoReservas)
-rutas.get('/buscarreserva',controladorReserva.buscandoReserva)
-    rutas.post('/registrarreserva/:idreserva',controladorReserva.registrandoReserva)
+rutas.get('/buscarreserva/:idreserva',controladorReserva.buscandoReserva)
+    rutas.post('/registrarreserva',controladorReserva.registrandoReserva)
     rutas.put('/editandoreserva/:idreserva',controladorReserva.editandoReserva)
     rutas.delete('/eliminandoreserva/:idreserva',controladorReserva.eliminarReserva)
     
