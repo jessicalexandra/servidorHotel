@@ -1,9 +1,11 @@
+ import { ServicioHabitacion } from "../services/ServicioHabitacion.js"
  export class ControladorHabitaciones{
     constructor(){}
-    registrandoHabitacion(peticion,respuesta){
+    async registrandoHabitacion(peticion,respuesta){
+        let objetoServicioHabitacion=new ServicioHabitacion()
         try{
             let datoshabitacion=peticion.body
-            console.log(datoshabitacion)
+            await objetoServicioHabitacion.registrar(datoshabitacion)
             respuesta.status(200).json({
                 "mensaje":"exito agregando datos",
             })
@@ -14,12 +16,13 @@
             })
         }
     }
-    buscandoHabitacion(peticion,respuesta){
+    async buscandoHabitacion(peticion,respuesta){
+        let objetoServicioHabitacion=new ServicioHabitacion()
         try{
             let idHabitacion=peticion.params.idhabitacion
-            console.log(idHabitacion)
-            respuesta.status(200).json({
+             respuesta.status(200).json({
                 "mensaje":"exito buscando habitacion",
+                "habitacion":await objetoServicioHabitacion.buscarPorId(idHabitacion)
             })
         }
         catch(error){
@@ -28,10 +31,12 @@
             })
         }
     }
-    buscandoHabitaciones(peticion,respuesta){
+    async buscandoHabitaciones(peticion,respuesta){
+        let objetoServicioHabitacion=new ServicioHabitacion()
         try{
             respuesta.status(200).json({
                 "mensaje":"exito buscando habitaciones",
+                "habitaciones":await objetoServicioHabitacion.buscarTodas()
             })
         }
         catch(error){
@@ -40,12 +45,12 @@
             })
         }
     }
-    editandoHabitacion(peticion,respuesta){
+    async editandoHabitacion(peticion,respuesta){
+        let idHabitacion=peticion.params.idhabitacion
+        let datosHabitacion=peticion.body
+        let objetoServicioHabitacion=new ServicioHabitacion()
         try{
-            let idHabitacion=peticion.params.idhabitacion
-            let datosHabitacion=peticion.body
-            console.log(idHabitacion)
-            console.log(datosHabitacion)
+            await objetoServicioHabitacion.editar(idHabitacion,datosHabitacion)
             respuesta.status(200).json({
                 "mensaje":"exito editando habitacion",
             })
