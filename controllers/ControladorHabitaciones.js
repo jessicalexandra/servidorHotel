@@ -1,14 +1,29 @@
  import { ServicioHabitacion } from "../services/ServicioHabitacion.js"
  export class ControladorHabitaciones{
     constructor(){}
+
     async registrandoHabitacion(peticion,respuesta){
+        let datoshabitacion=peticion.body
         let objetoServicioHabitacion=new ServicioHabitacion()
         try{
-            let datoshabitacion=peticion.body
-            await objetoServicioHabitacion.registrar(datoshabitacion)
-            respuesta.status(200).json({
-                "mensaje":"exito agregando datos",
-            })
+            if(datoshabitacion.precio < 100 && datoshabitacion.numeropersonas <2){
+                respuesta.status(400).json({
+                   "mensaje": "revisa el precio por noche y la cantidad maxima de personas"})
+
+            }else if(datoshabitacion.precio <100){
+                respuesta.status(400).json({"mensaje":"revisa el precio por noche"})
+            }
+            else if(datoshabitacion.numeropersonas <2){
+                respuesta.status(400).json({
+                    "mensaje": "muy poquitas personas en esta habitacion "
+                })
+            }else{ 
+                await objetoServicioHabitacion.registrar(datoshabitacion)
+                respuesta.status(200).json({
+                    "mensaje":"exito agregando datos",
+
+                 } )}
+        
         }
         catch(error){
             respuesta.status(400).json({
@@ -47,10 +62,10 @@
     }
     async editandoHabitacion(peticion,respuesta){
         let idHabitacion=peticion.params.idhabitacion
-        let datosHabitacion=peticion.body
+        let datoshabitacion=peticion.body
         let objetoServicioHabitacion=new ServicioHabitacion()
         try{
-            await objetoServicioHabitacion.editar(idHabitacion,datosHabitacion)
+            await objetoServicioHabitacion.editar(idHabitacion,datoshabitacion)
             respuesta.status(200).json({
                 "mensaje":"exito editando habitacion",
             })
