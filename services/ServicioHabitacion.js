@@ -1,7 +1,5 @@
 import {modeloHabitacion}from"../models/modeloHabitacion.js"; 
 
-
-
 export class ServicioHabitacion{
     constructor(){}
    async registrar(datosHabitacion){
@@ -18,5 +16,9 @@ export class ServicioHabitacion{
     }
     async editar(idHabitacion,datosHabitacion){
          return await modeloHabitacion.findByIdAndUpdate(idHabitacion,datosHabitacion)
+    }
+    
+    async eliminar(idHabitacion){
+        return await  modeloHabitacion.findOneAndDelete(idHabitacion)
     }
 }

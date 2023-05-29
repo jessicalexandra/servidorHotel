@@ -1,11 +1,13 @@
  import { ServicioHabitacion } from "../services/ServicioHabitacion.js"
+ 
  export class ControladorHabitaciones{
     constructor(){}
 
     async registrandoHabitacion(peticion,respuesta){
         let datoshabitacion=peticion.body
-        let objetoServicioHabitacion=new ServicioHabitacion()
         try{
+            let objetoServicioHabitacion=new ServicioHabitacion()
+        
             if(datoshabitacion.precio < 100 && datoshabitacion.numeropersonas <2){
                 respuesta.status(400).json({
                    "mensaje": "revisa el precio por noche y la cantidad maxima de personas"})
@@ -32,9 +34,9 @@
         }
     }
     async buscandoHabitacion(peticion,respuesta){
-        let objetoServicioHabitacion=new ServicioHabitacion()
+        let idHabitacion=peticion.params.idhabitacion
         try{
-            let idHabitacion=peticion.params.idhabitacion
+            let objetoServicioHabitacion=new ServicioHabitacion()
              respuesta.status(200).json({
                 "mensaje":"exito buscando habitacion",
                 "habitacion":await objetoServicioHabitacion.buscarPorId(idHabitacion)
@@ -47,8 +49,8 @@
         }
     }
     async buscandoHabitaciones(peticion,respuesta){
-        let objetoServicioHabitacion=new ServicioHabitacion()
         try{
+            let objetoServicioHabitacion=new ServicioHabitacion()
             respuesta.status(200).json({
                 "mensaje":"exito buscando habitaciones",
                 "habitaciones":await objetoServicioHabitacion.buscarTodas()
@@ -75,5 +77,19 @@
                 "mensaje":"fallamos en la operacion" +error
             })
         }
+    }
+    async eliminarHabitacion(peticion,respuesta){
+       let idHabitacion=peticion.params.idHabitacion
+       try {
+            let objetoServicioHabitacion = new ServicioHabitacion()
+            await objetoServicioHabitacion.eliminar(idHabitacion)
+            respuesta.status(200).json({
+                "mensaje":"exito eliminando la habitacion",
+            })
+       } catch (error) {
+            respuesta.status(400).json({
+                "mensaje":"fallamos en el eliminado" +error
+            })        
+       }
     }
  }
